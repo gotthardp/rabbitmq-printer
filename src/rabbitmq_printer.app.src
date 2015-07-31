@@ -1,0 +1,24 @@
+%
+% This Source Code Form is subject to the terms of the Mozilla Public
+% License, v. 2.0. If a copy of the MPL was not distributed with this
+% file, You can obtain one at http://mozilla.org/MPL/2.0/.
+%
+% Copyright (C) 2015 Petr Gotthard <petr.gotthard@centrum.cz>
+%
+
+{application, rabbitmq_printer,
+    [{description, "RabbitMQ LPD/LPR printer interface (RFC 1179)"},
+    {vsn, "0.0.1"},
+    {modules, [rabbit_lpr, rabbit_lpr_sup, rabbit_lpr_exchange]},
+    {registered, []},
+    {mod, {rabbit_lpr, []}},
+    {env, [
+        {tcp_listeners, [515]},
+        {tcp_listen_options, [binary,
+            {packet,    raw},
+            {reuseaddr, true},
+            {backlog,   128},
+            {nodelay,   true}]}]},
+    {applications, [kernel, stdlib, rabbit]}]}.
+
+% end of file

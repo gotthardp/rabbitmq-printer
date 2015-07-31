@@ -1,0 +1,1 @@
+-record(state, {socket, expect, count, buffer, job, metadata, text}).
