@@ -1,15 +1,47 @@
 # Line Printer Gateway Plugin for RabbitMQ
-Maps [LPR](http://www.rfc-editor.org/rfc/rfc1179.txt) to AMQP and allows users
-to print a message to the RabbitMQ broker.
+Allows users to print a message to the RabbitMQ broker. In other words,
+maps LPR (per [RFC 1179](http://www.rfc-editor.org/rfc/rfc1179.txt)) to AMQP.
 
 This plugin is experimental. The described functionality is fully implemented
 and partially tested. I seek feature requests and early adopters.
 
-## Mapping between SMTP and AMQP
+## Mapping between LPR and AMQP
+
+The plugin acts as a LPR daemon (LPD) and (by default) listens on the port 515. To listen on another port modify the `tcp_listeners` configuration entry.
+
+The plugin introduces a new exchange type 'x-printer'. Each print queue maps to a particular 'x-printer' exchange as explained in the table below. The exchange receives incoming prints and routes them to user queues.
+
+Print Queue | Behaviour
+:---        | :---
+`X`         | prints to the exchange X in the default vhost
+`V/X`       | prints to the exchange X in the vhost V
+`V/X/K`     | prints to the exchange X in the vhost V using routing key K
+`/X/K`      | prints to the exchange X in the default vhost using routing key K
+
+For security reasons it is not possible to print to exchanges other than those of the type 'x-printer'.
+
 
 ## Installation
 
 ### Setup LPR printer in Windows 7
+
+First, enable LPR printing in Windows
+ - Go to Control Panel/Programs and Features
+ - Click "Turn Windows features on or off", then expand "Print and Document Services"
+ - Check the LPR Port Monitor box, then click OK
+
+![alt tag](https://raw.github.com/gotthardp/rabbitmq-printer/master/doc/install-win-printer1.png)
+
+Then, install a LPR printer
+ - Choose "Devices and Printers" from the Control Panel
+ - Click the "Add a printer" button in the menu bar at the top
+ - Click the Add a local printer
+ - Choose "Create a new port", then select "LPR Port", then click Next
+ - Enter the printer name and the print queue name, then click "OK"
+ - Select the "Generic" manufacturer and the "Generic / Text Only" printer from the list, then click "Next"
+
+![alt tag](https://raw.github.com/gotthardp/rabbitmq-printer/master/doc/install-win-printer2.png)
+
 
 ### RabbitMQ Configuration
 Add the plug-in configuration section. See
