@@ -67,10 +67,6 @@ Build and activate the RabbitMQ plug-in `rabbitmq-printer`. See the
 [Plugin Development Guide](http://www.rabbitmq.com/plugin-development.html)
 for more details.
 
-    $ git clone https://github.com/rabbitmq/rabbitmq-public-umbrella.git
-    $ cd rabbitmq-public-umbrella
-    $ make co
-    $ ./foreachrepo git checkout <tag>
     $ git clone https://github.com/gotthardp/rabbitmq-printer.git
     $ cd rabbitmq-printer
     $ make
