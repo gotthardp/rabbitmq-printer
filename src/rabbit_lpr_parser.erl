@@ -78,7 +78,7 @@ parse_file(Bytes, #state{buffer=Buffer, count=Count}=State) ->
             {more, State#state{buffer=Buffer2}}
     end.
 
-conclude(subcommand, #state{job=Job, metadata=Metadata, text=Text}) ->
+conclude(subcommand, #state{job=Job, metadata=_Metadata, text=Text}) ->
     {XName, RK} = parse_job(re:split(Job, "[/]")),
     case rabbit_lpr_exchange:publish(XName, RK, #'P_basic'{}, Text) of
         {ok, _} -> ok;

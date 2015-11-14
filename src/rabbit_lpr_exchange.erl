@@ -33,9 +33,9 @@ description() ->
 
 serialise_events() -> false.
 
-route(#exchange{name      = Name,
-                arguments = Args},
-      #delivery{message = Msg}) ->
+route(#exchange{name      = _Name,
+                arguments = _Args},
+      #delivery{message = _Msg}) ->
     % printing not implemented yet
     [].
 
